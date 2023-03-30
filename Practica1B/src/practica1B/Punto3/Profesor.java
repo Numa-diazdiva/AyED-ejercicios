@@ -1,4 +1,4 @@
-package practica1B;
+package practica1B.Punto3;
 
 // Generalizar persona
 public class Profesor {

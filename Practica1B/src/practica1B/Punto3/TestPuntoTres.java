@@ -1,4 +1,4 @@
-package practica1B;
+package practica1B.Punto3;
 
 public class TestPuntoTres {
 	// Ver de generalizar las clases profesor y alumno
@@ -12,6 +12,8 @@ public class TestPuntoTres {
 		profesores[0] = new Profesor("Elías", "Fredersen", "efredersen@gmail.com", "Grabado 3", "FdA");
 		profesores[1] = new Profesor("Matilde", "Bellini", "bell@gmail.com", "Astronomía 4", "Astronomía");
 		profesores[2] = new Profesor("Raquel", "Viejo", "rachel@gmail.com", "Anatomía 3", "Medicina");
+		
+		// La solución con constructores tiene sentido, pero se pide usar setters en esta consigna. 
 		
 		for(int i = 0; i < 2; i++) {
 			System.out.println(estudiantes[i].tusDatos());

@@ -1,4 +1,4 @@
-package practica1B;
+package practica1B.Punto2;
 
 import java.util.Scanner;
 

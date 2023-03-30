@@ -1,4 +1,4 @@
-package practica1B;
+package practica1B.Punto1;
 
 public class Aplicacion1B {
 	
