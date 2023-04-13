@@ -1,4 +1,4 @@
-package tp03.ejercicio1;
+package tp03.ejercicio4;
 
 public class ColaGenerica<T> {
 

@@ -1,4 +1,4 @@
-package tp03.ejercicio1;
+package tp03.ejercicio3;
 
 public class ArbolBinario<T> {
 	private T dato;

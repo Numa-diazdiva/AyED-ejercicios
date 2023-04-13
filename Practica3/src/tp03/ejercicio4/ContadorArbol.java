@@ -1,15 +1,15 @@
-package tp03.ejercicio1;
+package tp03.ejercicio4;
 
 public class ContadorArbol {
 
-	private ArbolBinario<Integer> arbol;
+	private RedBinariaLlena<Integer> arbol;
 	
 	public ContadorArbol() {
-		this.arbol = new ArbolBinario<Integer>();
+		this.arbol = new RedBinariaLlena<Integer>();
 	}
 	
 	
-	private void paresInOrden(ArbolBinario<Integer> arbol, ListaEnlazadaGenerica<Integer> enteros) {
+	private void paresInOrden(RedBinariaLlena<Integer> arbol, ListaEnlazadaGenerica<Integer> enteros) {
 		if (arbol != null) {
 			if(arbol.tieneHijoIzquierdo()) {
 				paresInOrden(arbol.getHijoIzquierdo(), enteros);
@@ -33,7 +33,7 @@ public class ContadorArbol {
 		return enteros;
 	}
 
-	private void paresPostOrden(ArbolBinario<Integer> arbol, ListaEnlazadaGenerica<Integer> enteros) {
+	private void paresPostOrden(RedBinariaLlena<Integer> arbol, ListaEnlazadaGenerica<Integer> enteros) {
 		if (arbol != null) {
 			if(arbol.tieneHijoIzquierdo()) {
 				paresInOrden(arbol.getHijoIzquierdo(), enteros);

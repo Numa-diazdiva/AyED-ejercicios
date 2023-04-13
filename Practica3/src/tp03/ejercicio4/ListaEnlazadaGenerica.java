@@ -1,4 +1,4 @@
-package tp03.ejercicio1;
+package tp03.ejercicio4;
 /**
  * La clase ListaGenericaEnlazada es una ListaGenerica, donde los elementos de
  * la lista (nodos) referencian al siguiente elemento (nodo), por este motivo,
