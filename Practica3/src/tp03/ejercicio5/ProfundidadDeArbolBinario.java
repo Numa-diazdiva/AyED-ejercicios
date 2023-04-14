@@ -28,13 +28,15 @@ public class ProfundidadDeArbolBinario {
 			if (aux != null) {
 				if (nivelActual == profundidad) {
 					suma += aux.getDato();
-				}
-				// Podría poner un condicional por nivel para evitar encolar sin sentido? (else)
-				if(aux.tieneHijoIzquierdo()) {
-					cola.encolar(aux.getHijoIzquierdo());
-				}
-				if(aux.tieneHijoDerecho()) {
-					cola.encolar(aux.getHijoDerecho());
+				} else {
+					// Acá podemos evitar encolar nodos sin sentido con este else
+					// chequeado en clase
+					if(aux.tieneHijoIzquierdo()) {
+						cola.encolar(aux.getHijoIzquierdo());
+					}
+					if(aux.tieneHijoDerecho()) {
+						cola.encolar(aux.getHijoDerecho());
+					}
 				}
 			} else {
 				if(!cola.esVacia()) {
@@ -45,6 +47,4 @@ public class ProfundidadDeArbolBinario {
 		}
 		return suma;
 	}
-
-	
 }

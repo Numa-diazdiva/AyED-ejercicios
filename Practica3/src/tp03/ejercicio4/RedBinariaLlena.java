@@ -185,7 +185,7 @@ public class RedBinariaLlena<T> {
 			return 0;
 		} else {
 			retardo = this.tiempoRetardo;
-			// Capaz al ser un árbol lleno, acá puedo agregar un if para ver que tengan hijos
+			// Acá debería agregar una guarda por las dudas (a pesar de la topología de red)
 			int retardoIzquierdo = this.getHijoIzquierdo().mayorRetardoReenvio();
 			int retardoDerecho = this.getHijoDerecho().mayorRetardoReenvio();
 			if (retardoIzquierdo > retardoDerecho) {
@@ -197,6 +197,26 @@ public class RedBinariaLlena<T> {
 		return retardo;
 	}
 	
+	/*
+	 * Versión corregida en clase. La anterior no estaba mal, pero no es claro si las hojas tienen un retardo o no
+	 * (reciben el mensaje), así que se las puede considerar. En este caso, si no tienen retardo simplemente van a devolver 0.
+	 * Entiendo que esta solución es más general porque pregunta por los hijos (contempla que el árbol no esté lleno).
+	 * */
+	public int mayorRetardoReenvioCorregido() {
+		int retardo = 0, retardoIzquierdo = 0, retardoDerecho = 0;
+		if(this.tieneHijoIzquierdo()) {
+			retardoIzquierdo = this.getHijoIzquierdo().mayorRetardoReenvio();
+		}
+		if(this.tieneHijoDerecho()) {
+			retardoDerecho = this.getHijoDerecho().mayorRetardoReenvio();
+		}	
+		if (retardoIzquierdo > retardoDerecho) {
+			retardo += retardoIzquierdo;
+		} else {
+			retardo += retardoDerecho;
+		}
+		return retardo + this.tiempoRetardo;
+	}
 	
 	
 	

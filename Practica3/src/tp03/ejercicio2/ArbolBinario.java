@@ -78,7 +78,14 @@ public class ArbolBinario<T> {
 	public boolean tieneHijoDerecho() {
 		return this.hijoDerecho!=null;
 	}
-
+	
+	private void setHijoIzquierdo(ArbolBinario<T> n) {
+		this.hijoIzquierdo = n;
+	}
+	
+	private void setHijoDerecho(ArbolBinario<T> n) {
+		this.hijoDerecho = n;
+	}
 	
 	/*
 	 * Evalúa es hoja. Si es así devuelve 1.
@@ -100,6 +107,29 @@ public class ArbolBinario<T> {
 	}
 	
 	/*
+	 * Solución más recursiva vista en clase.
+	 * La idea del contador es más iterativa, por eso ponemos la suma en otra parte (return).
+	 * */
+	public int contarHojasRevisado() {
+		int hojasI = 0, hojasD = 0;
+		// Agregamos éste chequeo al principio, volver a preguntar, pero entiendo que es más que nada por el primer nodo raíz.
+		if(!this.esVacio()) {
+			if (this.esHoja()) {
+				return 1;
+			} else {
+				if(this.tieneHijoIzquierdo()) {
+					hojasI = this.getHijoIzquierdo().contarHojas();
+				}
+				if(this.tieneHijoDerecho()) {
+					hojasD = this.getHijoDerecho().contarHojas();
+				}
+			}
+		}
+		return hojasI + hojasD;
+	}
+	
+	
+	/*
 	 * Si es hoja no hace nada y solo de devuelve así mismo -no tiene nada que reordenar-
 	 * Si no es hoja envía el mensaje de espejo a ls hijos que tenga (se invierte desde las hojas a la raíz)
 	 * Una vez que envió los mensajes, hace swap entre las referencias de los nodos.
@@ -113,9 +143,10 @@ public class ArbolBinario<T> {
     			this.getHijoDerecho().espejo();
     		}
     		// Swap
-    		ArbolBinario<T> aux = this.hijoIzquierdo;
-    		this.hijoIzquierdo = this.hijoDerecho;
-    		this.hijoDerecho = aux;
+    		// Mejor con getters y setters para la cátedra
+    		ArbolBinario<T> aux = this.getHijoIzquierdo();
+    		this.setHijoIzquierdo(this.getHijoDerecho());
+    		this.setHijoDerecho(aux);
     	}
 		return this;
 	}
