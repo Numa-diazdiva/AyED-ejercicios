@@ -63,7 +63,6 @@ public class RecorridosAG {
 		}
 	}
 	
-
 	
 	public ListaGenerica<Integer> numerosImparesMayoresQuePostOrden (ArbolGeneral<Integer> a, Integer n) {
 		ListaGenerica<Integer> imparesMayores = new ListaEnlazadaGenerica<Integer>();
@@ -86,10 +85,32 @@ public class RecorridosAG {
 		}
 	}
 	
-	public boolean esImparMayorQue(Integer n1, Integer n2) {
-		return ((n1 % 2) != 0) && n1 > 2;
+	
+	public ListaGenerica<Integer> numerosImparesMayoresQuePorNiveles(ArbolGeneral<Integer> a, Integer n) {
+		ListaGenerica<Integer> imparesMayores = new ListaEnlazadaGenerica<Integer>();
+		ColaGenerica<ArbolGeneral<Integer>> cola = new ColaGenerica<ArbolGeneral<Integer>>();
+		cola.encolar(a);
+		
+		while(!cola.esVacia()) {
+			ArbolGeneral<Integer> nodoActual = cola.desencolar();
+			if (!nodoActual.esVacio()) {
+				if(esImparMayorQue(nodoActual.getDato(), n)) {
+					imparesMayores.agregarFinal(nodoActual.getDato());
+				}
+				if (nodoActual.tieneHijos()) {
+					ListaGenerica<ArbolGeneral<Integer>> hijos = a.getHijos();
+					hijos.comenzar();
+					while(!hijos.fin()) {
+						cola.encolar(hijos.proximo());
+					}
+				}				
+			}
+		}
+		return imparesMayores;
 	}
 	
-	
+	public boolean esImparMayorQue(Integer n1, Integer n2) {
+		return ((n1 % 2) != 0) && n1 > 2;
+	}	
 	
 }
