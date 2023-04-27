@@ -1,4 +1,4 @@
-package tp05.ejercicio5;
+package tp04.ejercicio5;
 
 public class AreaEmpresa {
 

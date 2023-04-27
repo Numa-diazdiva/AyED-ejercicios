@@ -1,4 +1,4 @@
-package tp05.ejercicio5;
+package tp04.ejercicio5;
 
 import tp02.ejercicio2.ListaEnlazadaGenerica;
 import tp02.ejercicio2.ListaGenerica;
