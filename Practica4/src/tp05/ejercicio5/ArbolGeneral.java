@@ -1,4 +1,4 @@
-package tp04.ejercicio4;
+package tp05.ejercicio5;
 
 import tp02.ejercicio2.ListaEnlazadaGenerica;
 import tp02.ejercicio2.ListaGenerica;
@@ -186,7 +186,7 @@ public class ArbolGeneral<T> {
 			}
 		}
 		
-		return maximaCantDeNodosPorNivel;
+		return 0;
 	}
 
 }

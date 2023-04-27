@@ -1,4 +1,4 @@
-package tp04.ejercicio4;
+package tp04.ejercicio6;
 
 import tp02.ejercicio2.ListaEnlazadaGenerica;
 import tp02.ejercicio2.ListaGenerica;
@@ -189,4 +189,27 @@ public class ArbolGeneral<T> {
 		return maximaCantDeNodosPorNivel;
 	}
 
+	/*
+	 * Ejercicio 6
+	 * */
+	public boolean esAncestro(ArbolGeneral<T> a, ArbolGeneral<T> b) {	
+		return a.buscar(b);
+	}
+	
+	public boolean buscar(ArbolGeneral<T> nodo) {
+		if(this.esHoja()) {
+			if (this.equals(nodo)) {
+				return true;
+			}
+		} else {
+			this.hijos.comenzar();
+			while(!hijos.fin()) {
+				if(hijos.proximo().buscar(nodo)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
 }
