@@ -191,25 +191,38 @@ public class ArbolGeneral<T> {
 
 	/*
 	 * Ejercicio 6
+	 * precondición: a != b
 	 * */
-	public boolean esAncestro(ArbolGeneral<T> a, ArbolGeneral<T> b) {	
-		return a.buscar(b);
-	}
-	
-	public boolean buscar(ArbolGeneral<T> nodo) {
-		if(this.esHoja()) {
-			if (this.equals(nodo)) {
-				return true;
-			}
-		} else {
-			this.hijos.comenzar();
-			while(!hijos.fin()) {
-				if(hijos.proximo().buscar(nodo)) {
+	public boolean esAncestro(T a, T b) {
+		if(!this.esVacio()) {
+			ArbolGeneral<T> arbolA = this.buscar(a);
+			if(arbolA != null) {
+				// Encontré el ancestro
+				if(arbolA.buscar(b) != null) {
+					// Encontré el descendiente
 					return true;
 				}
 			}
 		}
 		return false;
+	}
+	
+	public ArbolGeneral<T> buscar(T dato) {
+		if(this.getDato().equals(dato)) {
+			return this;
+		} else {
+			if (this.tieneHijos()) {
+				this.hijos.comenzar();
+				while(!hijos.fin()) {
+					ArbolGeneral<T> actual = this.hijos.proximo();
+					ArbolGeneral<T> resultadoActual = actual.buscar(dato); //podemos simplificar en una sola línea
+					if(resultadoActual != null) {
+						return resultadoActual;
+					}
+				}
+			}
+		}
+		return null;
 	}
 	
 	/*
