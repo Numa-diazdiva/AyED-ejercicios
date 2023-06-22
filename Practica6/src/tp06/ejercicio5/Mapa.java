@@ -90,6 +90,7 @@ public class Mapa {
 		if(!llegue) {
 			// Error en .eliminar() 
 			// camino.eliminar(vertice.dato());
+			// Agrego quitar de visitados
 			camino.eliminarEn(camino.tamanio());
 			System.out.println("Vuelvo de: " + vertice.dato());
 			System.out.println("----------------");
@@ -120,38 +121,36 @@ public class Mapa {
 		visitados[posVertice] = true;
 		Vertice<String> vertice = this.mapaCiudades.vertice(posVertice);
 		boolean llegue = false;
+		camino.agregarFinal(vertice.dato());
+	
+		System.out.println("Estoy en: " + vertice.dato());
+		System.out.println("Camino: " + camino);
+		System.out.println("* tamanio del camino: " + camino.tamanio());
 		
-		// Si tengo que esquivar la ciudad no hago nada, solo retorno false
-		if(!ciudadesAEsquivar.incluye(vertice.dato())) {
-			camino.agregarFinal(vertice.dato());
+		if(vertice.dato() != destino) {
+			ListaGenerica<Arista<String>> aristas = this.mapaCiudades.listaDeAdyacentes(vertice);
+			aristas.comenzar();
 			
-			System.out.println("Estoy en: " + vertice.dato());
-			System.out.println("Camino: " + camino);
-			System.out.println("* tamanio del camino: " + camino.tamanio());
-			
-			if(vertice.dato() != destino) {
-				ListaGenerica<Arista<String>> aristas = this.mapaCiudades.listaDeAdyacentes(vertice);
-				aristas.comenzar();
-				
-				while(!aristas.fin() & !llegue) {
-					int verticeDestino = aristas.proximo().verticeDestino().getPosicion();
-					System.out.println("Destino próximo: " + this.mapaCiudades.vertice(verticeDestino).dato());
-					if(!visitados[verticeDestino]) {
-						llegue = dfsCaminoEntreCiudadesExceptuando(verticeDestino, visitados, camino, destino, ciudadesAEsquivar);
-					}
+			while(!aristas.fin() & !llegue) {
+				int verticeDestino = aristas.proximo().verticeDestino().getPosicion();
+				System.out.println("Destino próximo: " + this.mapaCiudades.vertice(verticeDestino).dato());
+				// Si tengo que esquivar la ciudad no hago nada, mejor controlar ésto acá (no ir a la ciudad si no tengo que ir)
+				if(!visitados[verticeDestino] && !ciudadesAEsquivar.incluye(this.mapaCiudades.vertice(verticeDestino).dato()) ) {
+					llegue = dfsCaminoEntreCiudadesExceptuando(verticeDestino, visitados, camino, destino, ciudadesAEsquivar);
 				}
-			} else {
-				llegue = true;
 			}
-			
-			if(!llegue) {
-				// Error en .eliminar() 
-				// camino.eliminar(vertice.dato());
-				camino.eliminarEn(camino.tamanio());
-				System.out.println("Vuelvo de: " + vertice.dato());
-				System.out.println("----------------");
-			}
+		} else {
+			llegue = true;
 		}
+		
+		if(!llegue) {
+			// Agregar desmarca de visitados
+			visitados[posVertice] = false;
+			camino.eliminarEn(camino.tamanio());
+			System.out.println("Vuelvo de: " + vertice.dato());
+			System.out.println("----------------");
+		}
+		
 		
 		return llegue;
 
@@ -203,6 +202,7 @@ public class Mapa {
 			}
 		} else {
 			// Agrego el camino actual en caso de llegar a la ciudad
+			// Acá comparo con camino actual y me quedo el min, chequeo es vaci{ia al principio
 			caminos.agregarFinal((ListaEnlazadaGenerica<String>) caminoActual.clonar());
 		}
 	
@@ -322,6 +322,6 @@ public class Mapa {
 	public void conectarCiudades(Vertice<String> ciudad1, Vertice<String> ciudad2, int consumo) {
 		this.mapaCiudades.conectar(ciudad1, ciudad2, consumo);
 	}
-		
+
 
 }
