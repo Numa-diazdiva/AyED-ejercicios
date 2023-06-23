@@ -47,7 +47,42 @@ public class VisitaOslo {
 	}
 	
 	
-	private void busquedaCaminoApropiadoDFS(Grafo<String> lugares, int verticeActual, String destino, int maxTiempo, ListaGenerica<String> lugaresRestringidos, ListaGenerica<String> camino, CaminoConPesoTotal caminoApropiado, boolean[] visitados, int tiempoActual) {
+	/*
+	 * Retorna el primer camino que encuentra
+	 * */
+	private boolean busquedaCaminoApropiadoDFS(Grafo<String> lugares, int verticeActual, String destino, int maxTiempo, ListaGenerica<String> lugaresRestringidos, ListaGenerica<String> camino, CaminoConPesoTotal caminoApropiado, boolean[] visitados, int tiempoActual) {
+		
+		Vertice<String> vertice = lugares.vertice(verticeActual);
+		camino.agregarFinal(vertice.dato());
+		visitados[verticeActual] = true;
+		boolean llegue = false;
+		
+		if(vertice.dato() != destino) {
+			ListaGenerica<Arista<String>> aristas = lugares.listaDeAdyacentes(vertice);
+			
+			aristas.comenzar();
+			while(!aristas.fin() && !llegue) {
+				Arista<String> aristaActual = aristas.proximo();
+				Vertice<String> verticeDestino = aristaActual.verticeDestino();
+				if(!visitados[verticeDestino.getPosicion()] && !lugaresRestringidos.incluye(verticeDestino.dato()) && (tiempoActual + aristaActual.peso() <= maxTiempo) ) {
+					llegue = this.busquedaCaminoApropiadoDFS(lugares, verticeDestino.getPosicion(), destino, maxTiempo, lugaresRestringidos, camino, caminoApropiado, visitados, tiempoActual + aristaActual.peso());
+				}
+			}
+		} else {
+			caminoApropiado.setCamino(camino.clonar());
+			caminoApropiado.setTiempo(tiempoActual);
+			llegue = true;
+		}
+		
+		visitados[verticeActual] = false;
+		camino.eliminarEn(camino.tamanio());
+		return llegue;
+	}
+	
+	/*
+	 * Éste método evalúa varios caminos para quedarse con el menor
+	 * */
+	private void busquedaCaminoMinimoApropiadoDFS(Grafo<String> lugares, int verticeActual, String destino, int maxTiempo, ListaGenerica<String> lugaresRestringidos, ListaGenerica<String> camino, CaminoConPesoTotal caminoApropiado, boolean[] visitados, int tiempoActual) {
 		
 		Vertice<String> vertice = lugares.vertice(verticeActual);
 		camino.agregarFinal(vertice.dato());
@@ -61,7 +96,7 @@ public class VisitaOslo {
 				Arista<String> aristaActual = aristas.proximo();
 				Vertice<String> verticeDestino = aristaActual.verticeDestino();
 				if(!visitados[verticeDestino.getPosicion()] && !lugaresRestringidos.incluye(verticeDestino.dato()) && (tiempoActual + aristaActual.peso() <= maxTiempo) ) {
-					this.busquedaCaminoApropiadoDFS(lugares, verticeDestino.getPosicion(), destino, maxTiempo, lugaresRestringidos, camino, caminoApropiado, visitados, tiempoActual + aristaActual.peso());
+					this.busquedaCaminoMinimoApropiadoDFS(lugares, verticeDestino.getPosicion(), destino, maxTiempo, lugaresRestringidos, camino, caminoApropiado, visitados, tiempoActual + aristaActual.peso());
 				}
 			}
 		} else {
